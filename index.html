@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vidu Q4 Model Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b0c; --panel:#141416; --panel2:#1b1b1e; --line:#26262a; --text:#ededee; --muted:#8b8b92;
+  --accent:#d8ff3c; --vidu:#d8ff3c; --seed:#7cc4ff; --kling:#ff9a5c; --mini:#c49bff; --bad:#ff5c6c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 Inter,system-ui,sans-serif}
+a{color:inherit}
+header{position:sticky;top:0;z-index:20;background:rgba(11,11,12,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{max-width:1720px;margin:0 auto;padding:14px 24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+h1{font-size:17px;margin:0;font-weight:700;letter-spacing:-.01em}
+h1 b{color:var(--accent)}
+.sub{color:var(--muted);font-size:12px}
+.seg{display:flex;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:3px}
+.seg button{background:none;border:0;color:var(--muted);font:600 13px Inter;padding:7px 14px;border-radius:7px;cursor:pointer}
+.seg button.on{background:var(--panel2);color:var(--text);box-shadow:inset 0 0 0 1px var(--line)}
+.spacer{flex:1}
+.btn{background:var(--panel);border:1px solid var(--line);color:var(--text);font:600 13px Inter;padding:8px 13px;border-radius:9px;cursor:pointer}
+.btn:hover{border-color:#3a3a40}
+.btn.acc{background:var(--accent);color:#111;border-color:var(--accent)}
+nav.dirs{max-width:1720px;margin:0 auto;padding:0 24px 12px;display:flex;gap:8px;flex-wrap:wrap}
+nav.dirs a{font-size:12px;color:var(--muted);text-decoration:none;padding:5px 10px;border:1px solid var(--line);border-radius:999px}
+nav.dirs a:hover{color:var(--text)}
+main{max-width:1720px;margin:0 auto;padding:8px 24px 80px}
+section{margin-top:34px}
+.shead{display:flex;gap:16px;align-items:flex-start;margin-bottom:14px}
+.ref{width:96px;flex:none;border-radius:8px;border:1px solid var(--line);overflow:hidden;background:var(--panel);cursor:zoom-in}
+.ref img{display:block;width:100%}
+.shead h2{margin:0 0 4px;font-size:20px;letter-spacing:-.01em}
+.prompt{color:var(--muted);font-size:12.5px;max-width:1100px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+.prompt.open{-webkit-line-clamp:unset}
+.sbtns{margin-top:8px;display:flex;gap:8px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.grid.v{grid-template-columns:repeat(8,minmax(0,1fr))}
+.cell{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.media{position:relative;background:#000;aspect-ratio:16/9;cursor:zoom-in}
+.grid.v .media{aspect-ratio:9/16}
+.media video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:12px;padding:10px}
+.ph.bad{color:var(--bad)}
+.meta{padding:9px 11px;display:flex;gap:8px;align-items:center;justify-content:space-between}
+.mname{font-weight:600;font-size:13px;display:flex;align-items:center;gap:7px}
+.dot{width:8px;height:8px;border-radius:50%}
+.tag{font:500 11px 'JetBrains Mono',monospace;color:var(--muted);white-space:nowrap}
+.tech{padding:0 11px 9px;font:400 10.5px 'JetBrains Mono',monospace;color:#6d6d74;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.snd{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.6);border:0;color:#fff;border-radius:7px;font-size:12px;padding:4px 7px;cursor:pointer;opacity:0;transition:opacity .15s}
+.media:hover .snd{opacity:1}
+.snd.on{opacity:1;background:var(--accent);color:#111}
+.prog{position:absolute;left:0;bottom:0;height:2px;background:var(--accent);width:0}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend span{display:flex;gap:6px;align-items:center}
+.notes{margin-top:26px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;color:var(--muted);font-size:12.5px}
+.notes b{color:var(--text)}
+/* modal */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.94);display:none;flex-direction:column}
+.modal.on{display:flex}
+.mtop{display:flex;gap:12px;align-items:center;padding:12px 18px;flex-wrap:wrap}
+.mtop .ttl{font-weight:700}
+.mstage{flex:1;display:flex;gap:10px;padding:0 18px 12px;min-height:0}
+.mstage .pane{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
+.mstage video{flex:1;width:100%;min-height:0;object-fit:contain;background:#000;border-radius:8px}
+.mstage .lab{font:600 13px Inter;padding:6px 2px;display:flex;gap:8px;align-items:center}
+.picker{display:flex;gap:6px;flex-wrap:wrap}
+.picker button{font:500 12px Inter;background:var(--panel);color:var(--muted);border:1px solid var(--line);border-radius:7px;padding:5px 9px;cursor:pointer}
+.picker button.a{color:#111;background:var(--accent);border-color:var(--accent)}
+.picker button.b{color:#111;background:#7cc4ff;border-color:#7cc4ff}
+.picker button:disabled{opacity:.35;cursor:default}
+.mbar{padding:0 18px 16px;display:flex;gap:12px;align-items:center}
+.mbar input{flex:1;accent-color:var(--accent)}
+.kbd{font:500 11px 'JetBrains Mono';color:var(--muted)}
+@media (max-width:1100px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.v{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:640px){.bar,main,nav.dirs{padding-left:16px;padding-right:16px}.grid.v{grid-template-columns:repeat(2,minmax(0,1fr))}.ref{width:64px}.mstage{flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div>
+      <h1><b>Vidu Q4</b> vs Seedance 2.5 · Kling 3.0 · MiniMax H3 Max</h1>
+      <div class="sub">Один реф + один промпт на всё направление · Vidu во всех 5 качествах, остальные в максимуме ≈1080p</div>
+    </div>
+    <div class="spacer"></div>
+    <div class="seg" id="durSeg"><button data-d="5" class="on">5 сек</button><button data-d="16">16 сек</button></div>
+    <button class="btn" id="playAll">▶ Играть всё</button>
+    <button class="btn" id="stopAll">■ Стоп</button>
+  </div>
+  <nav class="dirs" id="dirNav"></nav>
+</header>
+<main>
+  <div class="legend" id="legend"></div>
+  <div id="sections"></div>
+  <div class="notes" id="notes"></div>
+</main>
+
+<div class="modal" id="modal">
+  <div class="mtop">
+    <span class="ttl" id="mTitle"></span>
+    <span class="kbd">← → модель · A/B сравнение · Space пауза · Esc закрыть</span>
+    <div class="spacer"></div>
+    <button class="btn" id="mAB">A/B: выкл</button>
+    <button class="btn" id="mClose">✕</button>
+  </div>
+  <div style="padding:0 18px 10px" class="picker" id="mPicker"></div>
+  <div class="mstage" id="mStage"></div>
+  <div class="mbar"><button class="btn" id="mPlay">❚❚</button><input type="range" id="mSeek" min="0" max="1000" value="0"><span class="kbd" id="mTime">0.0s</span></div>
+</div>
+
+<script src="manifest.js"></script>
+<script>
+const M = window.MANIFEST;
+const COLOR = {'Vidu Q4':'var(--vidu)','Seedance 2.5':'var(--seed)','Kling 3.0':'var(--kling)','MiniMax H3 Max':'var(--mini)'};
+let DUR = '5';
+try { DUR = localStorage.getItem('dur') || '5'; } catch(e) {}
+
+document.getElementById('legend').innerHTML = Object.entries(COLOR).map(([k,c])=>`<span><i class="dot" style="background:${c}"></i>${k}</span>`).join('');
+document.getElementById('dirNav').innerHTML = M.dirs.map(d=>`<a href="#${d.id}">${d.title}</a>`).join('');
+document.getElementById('notes').innerHTML = `
+<b>Условия теста.</b> На каждое направление одна картинка-реф и один и тот же английский промпт для всех моделей (отдельно короткая версия на 5 с и длинная на 16 с). Звук везде включён.<br>
+<b>Vidu Q4</b>: режим references (reference-to-video), 540p / 720p / 1080p / 2K / 4K, 5 и 16 с.<br>
+<b>Seedance 2.5</b>: omni_reference, 1080p, 5 и 16 с.<br>
+<b>Kling 3.0</b>: принимает только стартовый кадр (референсов у модели нет), поэтому реф подан как start frame; режим pro (1080p); максимум 15 с, длинный промпт идёт на 15 с.<br>
+<b>MiniMax H3 Max</b>: image reference, максимум разрешения у модели 768p, максимум длительности 15 с.<br>
+<b>IP-сцена</b>: Seedance 2.5 отказал на IP-проверке в обеих длительностях. Kling взял пропорции из портретного стартового кадра (2:3) и проигнорировал 16:9.<br>
+Подпись снизу у каждой ячейки — реальные параметры файла по ffprobe: разрешение, fps, длительность, битрейт, размер.`;
+
+function techLine(m){ return m ? `${m.w}×${m.h} · ${m.fps}fps · ${m.dur}s · ${m.mbps} Mb/s · ${m.mb} MB${m.audio?' · ♪':' · без звука'}` : ''; }
+function phText(c){
+  if (c.status === 'ip_detected') return ['bad','Отказ модерации<br>(IP / реальное лицо)'];
+  if (c.status === 'failed' || c.status === 'nsfw') return ['bad','Генерация упала<br>'+c.status];
+  return ['','В очереди…'];
+}
+
+function render(){
+  document.querySelectorAll('#durSeg button').forEach(b=>b.classList.toggle('on', b.dataset.d===DUR));
+  const root = document.getElementById('sections');
+  root.innerHTML = M.dirs.map(d=>{
+    const cells = d.cells[DUR];
+    const vert = d.ar === '9:16';
+    return `<section id="${d.id}">
+      <div class="shead">
+        <div class="ref" data-ref="${d.ref}"><img src="${d.ref}" alt="Реф ${d.title}" loading="lazy"></div>
+        <div style="min-width:0">
+          <h2>${d.title} <span class="tag">${d.ar} · ${DUR==='5'?'5 с':'16 с (Kling / MiniMax 15 с)'}</span></h2>
+          <div class="prompt" title="Нажми, чтобы раскрыть">${d.prompt[DUR].replace(/</g,'&lt;')}</div>
+          <div class="sbtns"><button class="btn" data-play="${d.id}">▶ Синхронно</button><button class="btn" data-stop="${d.id}">■</button></div>
+        </div>
+      </div>
+      <div class="grid ${vert?'v':''}">
+        ${cells.map((c,i)=>{
+          const [cls,txt] = phText(c);
+          return `<div class="cell">
+            <div class="media" data-dir="${d.id}" data-i="${i}">
+              ${c.src ? `<video src="${c.src}" muted playsinline loop preload="metadata"></video><div class="prog"></div><button class="snd" title="Звук">♪</button>` : `<div class="ph ${cls}">${txt}</div>`}
+            </div>
+            <div class="meta"><span class="mname"><i class="dot" style="background:${COLOR[c.model]}"></i>${c.model}</span><span class="tag">${c.res} · ${c.req}s</span></div>
+            <div class="tech">${techLine(c.meta) || '&nbsp;'}</div>
+          </div>`;}).join('')}
+      </div>
+    </section>`;
+  }).join('');
+  bind();
+}
+
+function vids(scope){ return [...(scope||document).querySelectorAll('video')]; }
+function playSync(list){ list.forEach(v=>{ v.currentTime=0; }); list.forEach(v=>v.play().catch(()=>{})); }
+function stop(list){ list.forEach(v=>{ v.pause(); v.currentTime=0; }); }
+
+function bind(){
+  document.querySelectorAll('.prompt').forEach(p=>p.onclick=()=>p.classList.toggle('open'));
+  document.querySelectorAll('[data-play]').forEach(b=>b.onclick=()=>playSync(vids(document.getElementById(b.dataset.play))));
+  document.querySelectorAll('[data-stop]').forEach(b=>b.onclick=()=>stop(vids(document.getElementById(b.dataset.stop))));
+  document.querySelectorAll('.ref').forEach(r=>r.onclick=()=>window.open(r.dataset.ref,'_blank'));
+  document.querySelectorAll('.media').forEach(m=>{
+    const v = m.querySelector('video'); if(!v) return;
+    const prog = m.querySelector('.prog');
+    v.ontimeupdate = ()=>{ if(v.duration) prog.style.width = (v.currentTime/v.duration*100)+'%'; };
+    m.onmouseenter = ()=>{ if(v.paused) v.play().catch(()=>{}); };
+    m.querySelector('.snd').onclick = e=>{
+      e.stopPropagation();
+      const on = v.muted;
+      vids().forEach(x=>{ x.muted=true; }); document.querySelectorAll('.snd').forEach(s=>s.classList.remove('on'));
+      if(on){ v.muted=false; e.target.classList.add('on'); if(v.paused) v.play(); }
+    };
+    m.onclick = ()=>openModal(m.dataset.dir, +m.dataset.i);
+  });
+}
+
+document.querySelectorAll('#durSeg button').forEach(b=>b.onclick=()=>{ DUR=b.dataset.d; try{localStorage.setItem('dur',DUR)}catch(e){} render(); });
+document.getElementById('playAll').onclick=()=>playSync(vids());
+document.getElementById('stopAll').onclick=()=>stop(vids());
+
+/* modal with A/B */
+const modal = document.getElementById('modal');
+let cur = null, A = 0, B = null, abOn = false;
+function openModal(dirId, i){ cur = M.dirs.find(d=>d.id===dirId); A=i; B=null; abOn=false; stop(vids(document.getElementById('sections'))); modal.classList.add('on'); drawModal(); }
+function closeModal(){ modal.classList.remove('on'); document.getElementById('mStage').innerHTML=''; }
+function cellsNow(){ return cur.cells[DUR]; }
+function drawModal(){
+  const cells = cellsNow();
+  document.getElementById('mTitle').textContent = `${cur.title} · ${DUR==='5'?'5 с':'16 с'}`;
+  document.getElementById('mAB').textContent = 'A/B: ' + (abOn?'вкл':'выкл');
+  document.getElementById('mPicker').innerHTML = cells.map((c,i)=>`<button data-i="${i}" class="${i===A?'a':''} ${abOn&&i===B?'b':''}" ${c.src?'':'disabled'}>${c.model.replace(' H3 Max','').replace(' 2.5','').replace(' 3.0','')} ${c.res.split(' ')[0]}</button>`).join('');
+  document.querySelectorAll('#mPicker button').forEach(b=>b.onclick=()=>{ const i=+b.dataset.i; if(abOn && i!==A){ B=i; } else { A=i; } drawModal(); });
+  const pane = (c,tag)=> `<div class="pane"><div class="lab"><i class="dot" style="background:${COLOR[c.model]}"></i>${tag?tag+' · ':''}${c.model} ${c.res} <span class="tag">${techLine(c.meta)}</span></div>${c.src?`<video src="${c.src}" playsinline loop ${tag==='B'?'muted':''}></video>`:`<div class="ph ${phText(c)[0]}" style="position:relative">${phText(c)[1]}</div>`}</div>`;
+  const st = document.getElementById('mStage');
+  st.innerHTML = pane(cells[A], abOn?'A':'') + (abOn && B!=null ? pane(cells[B],'B') : '');
+  const vs = vids(st); playSync(vs);
+  const seek = document.getElementById('mSeek'), tm = document.getElementById('mTime');
+  if(vs[0]) vs[0].ontimeupdate = ()=>{ if(vs[0].duration){ seek.value = vs[0].currentTime/vs[0].duration*1000; tm.textContent = vs[0].currentTime.toFixed(1)+'s'; } };
+  seek.oninput = ()=> vs.forEach(v=>{ if(v.duration) v.currentTime = seek.value/1000*vs[0].duration; });
+  document.getElementById('mPlay').onclick = togglePlay;
+}
+function togglePlay(){ const vs=vids(document.getElementById('mStage')); if(!vs.length) return; const p=vs[0].paused; vs.forEach(v=>p?v.play():v.pause()); document.getElementById('mPlay').textContent=p?'❚❚':'▶'; }
+function step(dir){ const cells=cellsNow(); let i=A; for(let k=0;k<cells.length;k++){ i=(i+dir+cells.length)%cells.length; if(cells[i].src) break; } A=i; drawModal(); }
+document.getElementById('mClose').onclick = closeModal;
+document.getElementById('mAB').onclick = ()=>{ abOn=!abOn; if(abOn && B==null){ B = cellsNow().findIndex((c,i)=>i!==A && c.src); if(B<0) B=null; } drawModal(); };
+document.addEventListener('keydown', e=>{
+  if(!modal.classList.contains('on')) return;
+  if(e.key==='Escape') closeModal();
+  else if(e.key==='ArrowRight') step(1);
+  else if(e.key==='ArrowLeft') step(-1);
+  else if(e.key===' '){ e.preventDefault(); togglePlay(); }
+  else if(e.key.toLowerCase()==='a' || e.key.toLowerCase()==='ф') document.getElementById('mAB').click();
+});
+render();
+</script>
+</body>
+</html>
